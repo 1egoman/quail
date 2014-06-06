@@ -1,0 +1,8 @@
+{
+  "port": 8000, 
+  "color": true, 
+  "log-file": "log-latest.log", 
+  "secret": "abc",
+  "wa-key": "4W736E-Y82E88RJYQ",
+  "weather-key": "e4b5f5d3042c07fc"
+}

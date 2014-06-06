@@ -1,0 +1,7 @@
+{
+  "name": "Weather",
+  "shortname": "w",
+  "desc": "Um, it tells you the weather?",
+  "author": "Ryan Gaus",
+  "main": "base_main.py:main_parser"
+}

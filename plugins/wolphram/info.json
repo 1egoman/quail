@@ -1,0 +1,6 @@
+{
+  "name": "Wolfram Alpha",
+  "shortname": "wa",
+  "desc": "Queries Wolfram alpha",
+  "main": "wa.py:WAParser"
+}

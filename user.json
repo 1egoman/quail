@@ -1,0 +1,11 @@
+{
+  "info": {
+    "gender": "male", 
+    "birthday": [1, 1, 2000], 
+    "last": "smith", 
+    "first": "john"
+  }, 
+  "events": [], 
+  "places": [], 
+  "people": []
+}
