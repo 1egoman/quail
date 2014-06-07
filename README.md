@@ -32,7 +32,7 @@ Plugins?
 ---
 Yes, plugins. Want to tell your 3D printer to print that model of a cactus from a simple API query? That's what I thought.
 
-#### NOTE: Start a plugin by cloning https://github.com/1egoman/qplugin! All the work is done for you!
+#### NOTE: Start a plugin by forking (or cloning) https://github.com/1egoman/qplugin! All the work is done for you!
 
 All a plugin minimally has to have is an info.json:
 ```json
