@@ -167,14 +167,30 @@ if __name__ == "__main__":
     # quail install 1egoman/qlist
     elif 'install' == sys.argv[1] and len(sys.argv) == 3:
       os.chdir("plugins")
-      if os.system("git clone http://github.com/%s" % sys.argv[2]) == 0:
-        print "Installed '%s'! Reload or restart any server instances to take effect." % sys.argv[2]
+      if sys.argv[2] == "template":
+        name = raw_input("Name of template plugin: ")
+        
+        if os.system("git clone http://github.com/1egoman/qplugin %s" % name) == 0:
+          print "Created template called '%s'." % name
+          origin = raw_input("Github plugin origin (blank for none) : ")
+          if origin and os.system("git remote set-url origin %s") == 0:
+            print "Done! Good luck on your new plugin!"
+          elif origin == "":
+            print "Done! Good luck on your new plugin!"
+          else:
+            print "Error!"
+        else:
+          print "Error!"
+
       else:
-        print "Error!"
+        if os.system("git clone http://github.com/%s" % sys.argv[2]) == 0:
+          print "Installed '%s'! Reload or restart any server instances to take effect." % sys.argv[2]
+        else:
+          print "Error!"
 
     # remove a plugin
     # quail remove 1egoman/qlist OR quail remove qlist
-    elif 'remove' == sys.argv[1] and len(sys.argv) == 3:
+    elif ('remove' == sys.argv[1] or 'rm' == sys.argv[1]) and len(sys.argv) == 3:
       os.chdir("plugins")
       try:
         shutil.rmtree(sys.argv[2].split("/")[-1])
