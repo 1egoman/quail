@@ -27,13 +27,18 @@ In config.json:
 - wa-key: go to http://products.wolframalpha.com/developers/ and get an api key. Put this here.
 - weather-key: go to http://www.wunderground.com/weather/api/ and get an api key. Put this here.
 
-
+How do I start Quail?
+---
+First, make sure you've got Python 2.7.x on your system.
+- open a terminal, and go to quail's folder
+- For debugging and other times where you would want to see Quail's stdout/stderr, run ```./quail.py go```
+- In a production environment, Quail can be started as a daemon. (```./quail.py start``, ```./quail.py stop``, ```./quail.py restart``)
 
 Plugins?
 ---
 Yes, plugins. Want to tell your 3D printer to print that model of a cactus from a simple API query? That's what I thought.
 
-#### NOTE: Start a plugin by forking (or cloning) https://github.com/1egoman/qplugin! All the work is done for you!
+#### NOTE: Start a plugin by forking (or cloning) https://github.com/1egoman/qplugin! All the setup work is done for you!
 
 All a plugin minimally has to have is an info.json:
 ```json
