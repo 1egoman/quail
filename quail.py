@@ -2,11 +2,16 @@
 import sys, os, time, atexit, shutil
 from signal import SIGTERM 
 
-PATH = os.path.join( os.path.abspath( os.path.dirname(__file__) ), "src")
+# test for location (only on unix)
+if "usr/bin" in os.path.abspath( os.path.dirname(__file__) ):
+  os.chdir("/opt/quail")
+  PATH = "/opt/quail/src"
+else:
+  PATH = os.path.join( os.path.abspath( os.path.dirname(__file__) ), "src")
 
 """
 A generic daemon class.
-Usage: subclass the Daemon class and override the run() method
+Modified for use with Quail
 """
 class QuailDaemon:
 
@@ -197,6 +202,26 @@ if __name__ == "__main__":
         print "Removed '%s'! Reload or restart any server instances to take effect." % sys.argv[2]
       except OSError:
         print "No such plugin '%s'!" % sys.argv[2]
+
+    # install quail on a system
+    elif 'init' == sys.argv[1] and "posix" in os.name:
+      QUAIL_PATH = "/opt/quail"
+      quail_old_path = os.getcwd()
+      print "Installing in %s" % QUAIL_PATH
+      os.system("sudo cp -R %s %s" % (quail_old_path, QUAIL_PATH))
+      os.system("sudo cp quail.py /usr/bin/quail")
+      os.system("sudo chmod -R 775 /opt/quail")
+      os.system("sudo chown -R `whoami`:`whoami` /opt/quail")
+      print "done!"
+
+    # remove quail form system
+    elif 'deinit' == sys.argv[1] and "posix" in os.name:
+      QUAIL_PATH = "/opt/quail"
+      quail_old_path = os.getcwd()
+      print "Removing from %s" % QUAIL_PATH
+      os.system("sudo rm -R %s" % QUAIL_PATH)
+      os.system("sudo rm /usr/bin/quail")
+      print "done!"
 
     else:
       print "Unknown Command"
