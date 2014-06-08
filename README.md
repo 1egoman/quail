@@ -1,4 +1,5 @@
-Ryan's Query Parser
+
+![quail logo](https://cdn.rawgit.com/1egoman/quail/master/logo.svg)
 =======
 
 
