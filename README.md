@@ -32,41 +32,9 @@ How do I start Quail?
 First, make sure you've got Python 2.7.x on your system.
 - open a terminal, and go to quail's folder
 - For debugging and other times where you would want to see Quail's stdout/stderr, run ```./quail.py go```
-- In a production environment, Quail can be started as a daemon. (```./quail.py start``, ```./quail.py stop``, ```./quail.py restart``)
+- In a production environment, Quail can be started as a daemon. (```./quail.py start``, ```./quail.py stop```, ```./quail.py restart```)
 
 Plugins?
 ---
 Yes, plugins. Want to tell your 3D printer to print that model of a cactus from a simple API query? That's what I thought.
-
-#### NOTE: Start a plugin by forking (or cloning) https://github.com/1egoman/qplugin! All the setup work is done for you!
-
-All a plugin minimally has to have is an info.json:
-```json
-{
-  "name": "Plugin Name",
-  "desc": "Short Description, maybe a line or so",
-  "author": "Your name, contact info",
-  "main": "main_file.py:sample_plugin"
-}
-```
-
-and a main_file.py (named accordingly in info.json):
-
-```python
-from base import *
-class sample_plugin(parser):
-  
-  # wether to run the plugin based on the user's query
-  def validate(self):
-    # the query is available under self.query to test against
-    return False
-  
-  # parse the query if it was validated
-  def parse(self, parent): 
-    self.resp["text"] = "The Response"
-    self.resp["status"] = STATUS_OK
-    return self.resp
-```
-
-Put both those files in a folder inside the plugins folder, and you've made a small plugin (that does nothing)!
-Check out the plugins folder for some better examples, or take a look at https://github.com/1egoman/qplugin
+For more about plugin development, [look here](http://github.com/1egoman/qplugin/wiki)
