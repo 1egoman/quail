@@ -32,7 +32,7 @@ How do I start Quail?
 First, make sure you've got Python 2.7.x on your system.
 - open a terminal, and go to quail's folder
 - For debugging and other times where you would want to see Quail's stdout/stderr, run ```./quail.py go```
-- In a production environment, Quail can be started as a daemon. (```./quail.py start``, ```./quail.py stop```, ```./quail.py restart```)
+- In a production environment, Quail can be started as a daemon. (```./quail.py start```, ```./quail.py stop```, ```./quail.py restart```)
 
 Plugins?
 ---
