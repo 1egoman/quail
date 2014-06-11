@@ -1,5 +1,5 @@
 
-![quail logo](https://cdn.rawgit.com/1egoman/quail/master/logo.svg)
+![quail logo](https://cdn.rawgit.com/1egoman/quail/83cab06d22c9e30a714e58a978d65d8e4f9d7b45/logo.svg)
 =======
 
 
