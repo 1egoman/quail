@@ -42,7 +42,6 @@ def load_all_plugins(q=None):
 
     # create a ready-to-call instance to the main class
     loc, name = j["main"].split(":")
-    # print name, os.path.join(p, loc)
 
     # also, temporarily add the plugin's folder to the search path
     sys.path.append(p)
@@ -50,6 +49,9 @@ def load_all_plugins(q=None):
     exec "d = plugins[-1]['module']."+name
     plugins[-1]["call"] = d
     sys.path.remove(p)
+
+    # add plugin directory to plugin list
+    plugins[-1]["dir"] = p
 
   return plugins
 
@@ -73,6 +75,12 @@ def find_correct_plugin(e, p, lastplugin=None):
 
   return None
 
+# get reference to 'd' at 'path'
+def get_definition(path, d):
+  loc, name = d.split(":")
+  g = imp.load_source( name, os.path.join(path, loc) )
+  exec "g = g."+name
+  return g
 
 # plugin test
 def main():

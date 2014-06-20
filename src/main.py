@@ -2,6 +2,7 @@ import factory
 from query import *
 import serverin as si
 from config import configParser
+from listener import listenerThread
 
 import inspect
 import time
@@ -63,7 +64,7 @@ class App(object):
     else:
       self.log_file = None
 
-    self.log( "version %s.%s%s by Ryan Gaus! https://github.com/1egoman/qparser" % (self.VERSION_MAJOR, self.VERSION_MINOR, self.VERSION_PATCH) )
+    self.log( "version %s.%s%s by Ryan Gaus! https://github.com/1egoman/quail" % (self.VERSION_MAJOR, self.VERSION_MINOR, self.VERSION_PATCH) )
     self.running = 1
     self.plugins = load_all_plugins(self)
 
@@ -80,11 +81,11 @@ class App(object):
       thrd.daemon = True
       thrd.start()
 
-      # create thread to update each plugin regularly
-      # thrd = updatethread(self)
-      # thrd.setName("threadUpdate")
-      # thrd.daemon = True
-      # thrd.start()
+      # create thread to update each listener
+      thrd = listenerThread(self, self.plugins)
+      thrd.setName("threadListener")
+      thrd.daemon = True
+      thrd.start()
 
       # get port
       if self.config.server.has_key("port"):

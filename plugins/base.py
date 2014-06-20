@@ -38,6 +38,10 @@ STATUS_UNKNOWN = "NONE"
 PHRASE_TRUE = True
 PHRASE_FALSE = False
 
+# different presentations
+AS_LIST = "AS_LIST"
+NORMAL = "NORMAL"
+
 
 """
 Error for invalid key or credentials
