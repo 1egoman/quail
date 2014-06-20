@@ -46,8 +46,8 @@ class main_parser(parser):
   def parse(self, parent):
 
     # get api key
-    if parent.config.has_key("weather-key"):
-      WEATHER_API_KEY = parent.config["weather-key"]
+    if parent.config.server.has_key("weather-key"):
+      WEATHER_API_KEY = parent.config.server["weather-key"]
     else:
       self.resp["text"] = "bad key"
       self.resp["type"] = "weather"

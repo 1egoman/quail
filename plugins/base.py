@@ -39,6 +39,11 @@ PHRASE_TRUE = True
 PHRASE_FALSE = False
 
 
+"""
+Error for invalid key or credentials
+"""
+class InvalidKeyException(Exception): pass
+
 
 """
 Base class for each plugin's parser

@@ -2,9 +2,7 @@ import sys, os, json, imp
 # location of plugins
 PLGN_LOC = os.path.abspath("../plugins")
 
-user = {
-  "coords": (43.2029226, -76.288858)
-}
+user = {}
 
 
 # load all plugins
@@ -57,11 +55,19 @@ def load_all_plugins(q=None):
 
 
 # find the plugin that works
-def find_correct_plugin(e, p):
+def find_correct_plugin(e, p, lastplugin=None):
+
+  # check last plugin
+  if lastplugin:
+    plgn = [  pl for pl in p if pl["name"] == lastplugin and "Wolfram Alpha" not in pl["name"]  ]
+    if len(plgn):
+      l = plgn[0]["call"](e, plgn[0])
+      if l.validate():
+        return l, plgn[0]
 
   # loop through plugins
   for pl in p:
-    c = pl["call"](e, user)
+    c = pl["call"](e, pl)
     if c.validate():
       return c, pl
 

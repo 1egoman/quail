@@ -29,22 +29,24 @@ class colors:
     colors.ENDC = ''
 
 
+lastplugin = None
+iteration = 0
 
 
 """
 this class deals with incoming http requests
 """
 class http_rest(BaseHTTPRequestHandler):
-
+  
 
   def do_GET(self):
-
+    global lastplugin, iteration
 
     # make sure we have permission
     data = self.parse_path()
 
     # authentication
-    if len(data) and self.server.parent.config.has_key("secret") and data[0] == self.server.parent.config["secret"]:
+    if len(data) and self.server.parent.config.server.has_key("secret") and data[0] == self.server.parent.config.server["secret"]:
 
 
       # get rid of password in data string
@@ -65,12 +67,12 @@ class http_rest(BaseHTTPRequestHandler):
       # start building json string
       response = {}
 
-
+      # parse text for plugin
+      query = create_query_object( data[0] )
 
 
       # what kind of request?
       if len(data) > 1:
-
         # a plugin was specified in the url
 
         # find the correct plugin
@@ -78,7 +80,7 @@ class http_rest(BaseHTTPRequestHandler):
         if len(plugin):
           query = create_query_object( data[1] )
           d, plugin_name = plugin[0], plugin[0]["name"]
-          plugin_call = d["call"](query, None)
+          plugin_call = d["call"](query, d)
         else:
           self.send_error(404, "no such plugin can be found")
           return
@@ -87,19 +89,23 @@ class http_rest(BaseHTTPRequestHandler):
 
 
       else:
-
         # a plugin wasn't specified in the url
 
-        # parse text for plugin, if requested
-        query = create_query_object( data[0] )
-
         # find correct plugin
-        plugin = find_correct_plugin( query, self.server.parent.plugins)
+        plugin = find_correct_plugin( query, self.server.parent.plugins, lastplugin=lastplugin)
         if plugin:
           plugin_call, plugin_name = plugin[0], plugin[1]["name"]
         else:
           self.send_error(404, "no such plugin can be found")
           return
+
+      # set this plugin to be last plugin, for checking it first later on
+      if lastplugin == plugin_name:
+        iteration += 1
+      else:
+        iteration = 0
+      lastplugin = plugin_name
+      plugin_call.iteration = iteration
 
 
 
@@ -144,12 +150,5 @@ class MyHTTPServer(HTTPServer):
     def __init__(self, server_address, RequestHandlerClass, parent=None):
         HTTPServer.__init__(self, server_address, RequestHandlerClass)
         self.parent = parent
-
-
-
-
-
-
-
 
 
