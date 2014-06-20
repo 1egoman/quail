@@ -19,13 +19,17 @@ When a query is sent to the server:
 
 How do I make this thing come to life?
 ---
-In config.json:
+1. Download / Clone Quail
+2. Start Quail: ```./quail.py go```
+3. Take a look here: [127.0.0.1:8000/abc/hi](127.0.0.1:8000/abc/hi)
+
+<!-- In config.json:
 - secret: key needed to make queries. (may work without one, but I wouldn't try)
 - port: TCP network port that the server should run on
 - color: uses ANSI colors; Windows users should set this to false
 - log-file: location of the log file
 - wa-key: go to http://products.wolframalpha.com/developers/ and get an api key. Put this here.
-- weather-key: go to http://www.wunderground.com/weather/api/ and get an api key. Put this here.
+- weather-key: go to http://www.wunderground.com/weather/api/ and get an api key. Put this here. -->
 
 How do I start Quail?
 ---
