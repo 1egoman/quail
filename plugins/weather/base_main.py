@@ -37,8 +37,14 @@ days = {
 # weather terms
 weather_terms = ["weather", "rain", "sun", "cloud", "snow", "wind", "tempurature", "conditions", "storm", "advisory"]
 
+# weather listener
+def weather_listener(parent):
+  # print "listened!"
+  pass
+
 
 class main_parser(parser):
+  """ weather parser class """
 
   def validate(self):
     return len([1 for d in weather_terms if d in self.query])
@@ -79,3 +85,5 @@ class main_parser(parser):
     self.resp["status"] = STATUS_OK
     self.resp["type"] = "weather"
     return self.resp
+
+
