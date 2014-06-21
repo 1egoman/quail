@@ -56,6 +56,8 @@ class App(object):
     if self.config.server.has_key("color") and not self.config.server["color"]:
       colors.reset()
 
+    # create stack, used to store outgoing packets
+    self.stack = []
 
 
     # open log if needed
@@ -93,9 +95,10 @@ class App(object):
       else:
         port = 8000
 
+
       # start server
       self.server = factory.MyHTTPServer(('', port), factory.http_rest, self)
-      self.log("hosted on 127.0.0.1:%s" % port)
+      self.log("hosted on port :%s" % port)
       self.log( "done! type help or ? for a command list." )
       self.server.serve_forever()
 
