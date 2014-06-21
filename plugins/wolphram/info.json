@@ -2,5 +2,6 @@
   "name": "Wolfram Alpha",
   "shortname": "wa",
   "desc": "Queries Wolfram alpha",
-  "main": "wa.py:WAParser"
+  "main": "wa.py:WAParser",
+  "key": "4W736E-Y82E88RJYQ"
 }

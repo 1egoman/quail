@@ -4,5 +4,6 @@
   "desc": "Um, it tells you the weather?",
   "author": "Ryan Gaus",
   "main": "base_main.py:main_parser",
-  "listener": "base_main.py:weather_listener"
+  "listener": "base_main.py:weather_listener",
+  "key": "e4b5f5d3042c07fc"
 }

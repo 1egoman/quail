@@ -17,10 +17,11 @@ class WAParser(base.parser):
   def parse(self, parent):
 
     # get key from config
-    if parent.config.server.has_key("wa-key"):
-      API_KEY = parent.config.server["wa-key"]
+    if self.info.has_key("key"):
+      API_KEY = self.info["key"]
     else:
       self.resp["text"] = "bad key"
+      self.resp["type"] = "wa"
       self.resp["status"] = base.STATUS_ERR
       return self.resp
 
