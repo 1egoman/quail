@@ -38,6 +38,9 @@ STATUS_UNKNOWN = "NONE"
 PHRASE_TRUE = True
 PHRASE_FALSE = False
 
+# preset types
+TYPE_PUSH = "PUSH"
+
 # different presentations
 AS_LIST = "AS_LIST"
 NORMAL = "NORMAL"
