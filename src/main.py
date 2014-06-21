@@ -41,7 +41,7 @@ class App(object):
 
   # quail version
   VERSION_MAJOR = 0
-  VERSION_MINOR = 2
+  VERSION_MINOR = 3
   VERSION_PATCH = 'A'
 
   def __init__(self):
