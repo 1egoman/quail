@@ -37,8 +37,14 @@ days = {
 # weather terms
 weather_terms = ["weather", "rain", "sun", "cloud", "snow", "wind", "tempurature", "conditions", "storm", "advisory"]
 
+# weather listener
+def weather_listener(parent):
+  # print "listened!"
+  pass
+
 
 class main_parser(parser):
+  """ weather parser class """
 
   def validate(self):
     return len([1 for d in weather_terms if d in self.query])
@@ -46,8 +52,8 @@ class main_parser(parser):
   def parse(self, parent):
 
     # get api key
-    if parent.config.has_key("weather-key"):
-      WEATHER_API_KEY = parent.config["weather-key"]
+    if parent.config.server.has_key("weather-key"):
+      WEATHER_API_KEY = parent.config.server["weather-key"]
     else:
       self.resp["text"] = "bad key"
       self.resp["type"] = "weather"
@@ -79,3 +85,5 @@ class main_parser(parser):
     self.resp["status"] = STATUS_OK
     self.resp["type"] = "weather"
     return self.resp
+
+

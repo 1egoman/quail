@@ -3,5 +3,6 @@
   "shortname": "w",
   "desc": "Um, it tells you the weather?",
   "author": "Ryan Gaus",
-  "main": "base_main.py:main_parser"
+  "main": "base_main.py:main_parser",
+  "listener": "base_main.py:weather_listener"
 }

@@ -1,0 +1,6 @@
+{
+  "name": "Static",
+  "desc": "Static Responses",
+  "author": "Ryan Gaus",
+  "main": "static.py:staticParser"
+}

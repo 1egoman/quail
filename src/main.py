@@ -1,6 +1,8 @@
 import factory
 from query import *
 import serverin as si
+from config import configParser
+from listener import listenerThread
 
 import inspect
 import time
@@ -37,38 +39,34 @@ Main application instance, which holds global vars and controls the server
 """
 class App(object):
 
+  # quail version
   VERSION_MAJOR = 0
-  VERSION_MINOR = 1
+  VERSION_MINOR = 3
   VERSION_PATCH = 'A'
 
   def __init__(self):
 
 
-    # read config file
+    # read config files
     self.config = None
+    self.config = configParser()
 
-    # make sure config exists
-    if not os.path.exists("../config.json"):
-      with open("../config.json", 'w') as f:
-        f.write("{\n  \"port\": 8000, \n  \"color\": true, \n  \"log-file\": \"log-latest.log\", \n  \"secret\": \"abc\"\n}\n")
-
-    # read and parse json
-    with open("../config.json") as f:
-      self.config = json.loads( f.read() )
 
     # disable colors if needed
-    if self.config.has_key("color") and not self.config["color"]:
+    if self.config.server.has_key("color") and not self.config.server["color"]:
       colors.reset()
 
+    # create stack, used to store outgoing packets
+    self.stack = []
 
 
     # open log if needed
-    if self.config.has_key("log-file") and self.config["log-file"]:
-      self.log_file = open( os.path.join("..", self.config["log-file"]), 'a')
+    if self.config.server.has_key("log-file") and self.config.server["log-file"]:
+      self.log_file = open( os.path.join("..", self.config.server["log-file"]), 'a')
     else:
       self.log_file = None
 
-    self.log( "version %s.%s%s by Ryan Gaus! https://github.com/1egoman/qparser" % (self.VERSION_MAJOR, self.VERSION_MINOR, self.VERSION_PATCH) )
+    self.log( "version %s.%s%s by Ryan Gaus! https://github.com/1egoman/quail" % (self.VERSION_MAJOR, self.VERSION_MINOR, self.VERSION_PATCH) )
     self.running = 1
     self.plugins = load_all_plugins(self)
 
@@ -85,20 +83,22 @@ class App(object):
       thrd.daemon = True
       thrd.start()
 
-      # create thread to update each plugin regularly
-      # thrd = updatethread(self)
-      # thrd.setName("threadUpdate")
-      # thrd.daemon = True
-      # thrd.start()
+      # create thread to update each listener
+      thrd = listenerThread(self, self.plugins)
+      thrd.setName("threadListener")
+      thrd.daemon = True
+      thrd.start()
 
       # get port
-      if self.config.has_key("port"):
-        port = self.config["port"]
+      if self.config.server.has_key("port"):
+        port = self.config.server["port"]
       else:
         port = 8000
 
+
       # start server
       self.server = factory.MyHTTPServer(('', port), factory.http_rest, self)
+      self.log("hosted on port :%s" % port)
       self.log( "done! type help or ? for a command list." )
       self.server.serve_forever()
 

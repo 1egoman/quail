@@ -2,9 +2,7 @@ import sys, os, json, imp
 # location of plugins
 PLGN_LOC = os.path.abspath("../plugins")
 
-user = {
-  "coords": (43.2029226, -76.288858)
-}
+user = {}
 
 
 # load all plugins
@@ -44,7 +42,6 @@ def load_all_plugins(q=None):
 
     # create a ready-to-call instance to the main class
     loc, name = j["main"].split(":")
-    # print name, os.path.join(p, loc)
 
     # also, temporarily add the plugin's folder to the search path
     sys.path.append(p)
@@ -53,20 +50,37 @@ def load_all_plugins(q=None):
     plugins[-1]["call"] = d
     sys.path.remove(p)
 
+    # add plugin directory to plugin list
+    plugins[-1]["dir"] = p
+
   return plugins
 
 
 # find the plugin that works
-def find_correct_plugin(e, p):
+def find_correct_plugin(e, p, lastplugin=None):
+
+  # check last plugin
+  if lastplugin:
+    plgn = [  pl for pl in p if pl["name"] == lastplugin and "Wolfram Alpha" not in pl["name"]  ]
+    if len(plgn):
+      l = plgn[0]["call"](e, plgn[0])
+      if l.validate():
+        return l, plgn[0]
 
   # loop through plugins
   for pl in p:
-    c = pl["call"](e, user)
+    c = pl["call"](e, pl)
     if c.validate():
       return c, pl
 
   return None
 
+# get reference to 'd' at 'path'
+def get_definition(path, d):
+  loc, name = d.split(":")
+  g = imp.load_source( name, os.path.join(path, loc) )
+  exec "g = g."+name
+  return g
 
 # plugin test
 def main():

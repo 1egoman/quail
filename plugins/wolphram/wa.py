@@ -17,8 +17,8 @@ class WAParser(base.parser):
   def parse(self, parent):
 
     # get key from config
-    if parent.config.has_key("wa-key"):
-      API_KEY = parent.config["wa-key"]
+    if parent.config.server.has_key("wa-key"):
+      API_KEY = parent.config.server["wa-key"]
     else:
       self.resp["text"] = "bad key"
       self.resp["status"] = base.STATUS_ERR

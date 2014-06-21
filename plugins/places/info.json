@@ -1,0 +1,8 @@
+{
+  "name": "Places",
+  "desc": "get local place suggestions",
+  "author": "Ryan Gaus",
+  "shortname": "place",
+  "main": "pigeon.py:pigeonParser",
+  "key": "AIzaSyANUDDoUzYdDo1C3jYut6kkxUZ2tXCJuxQ"
+}

@@ -66,6 +66,7 @@ class terminalFetcher(Thread):
         c = query.find_correct_plugin(g, self.parent.plugins)
 
         if c:
+          c[0].iteration = 0
           out = c[0].parse(parent=self.parent)
           if out:
             self.parent.log( repr(out) )
