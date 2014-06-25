@@ -4,6 +4,7 @@ import inspect
 import urllib2
 import urlparse
 import os
+from json import dumps
 
 from queryobject import create_query_object
 from query import find_correct_plugin
@@ -144,7 +145,7 @@ class http_rest(BaseHTTPRequestHandler):
         self.wfile.write( y )
       else:
         # write out whole stack
-        self.wfile.write( "%s" % self.server.parent.stack )
+        self.wfile.write( "%s" % dumps(self.server.parent.stack) )
         self.server.parent.stack = []
 
 
