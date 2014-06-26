@@ -20,7 +20,7 @@ When a query is sent to the server:
 How do I make this thing come to life?
 ---
 1. Download / Clone Quail
-2. Start Quail: ```./quail.py go```
+2. Start Quail: (cd inside src first) `./quail.py go`
 3. Take a look here: [127.0.0.1:8000/abc/hi](127.0.0.1:8000/abc/hi)
 
 <!-- In config.json:

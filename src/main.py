@@ -34,15 +34,15 @@ class colors:
 
 
 
-""" 
-Main application instance, which holds global vars and controls the server 
+"""
+Main application instance, which holds global vars and controls the server
 """
 class App(object):
 
   # quail version
   VERSION_MAJOR = 0
   VERSION_MINOR = 3
-  VERSION_PATCH = 'B'
+  VERSION_PATCH = 'C'
 
   def __init__(self):
 
@@ -125,7 +125,7 @@ class App(object):
     print header, content
 
     # to file
-    if self.log_file: 
+    if self.log_file:
       self.log_file.write(colorless_header)
       self.log_file.write(content)
       self.log_file.write('\n')

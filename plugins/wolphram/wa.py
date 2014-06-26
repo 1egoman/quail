@@ -44,7 +44,7 @@ class WAParser(base.parser):
 
     # sub data type
     self.resp["subtype"] = root.attrib["datatypes"]
-    
+
     # parse now
     for pod in root:
       if pod.tag == "pod":
@@ -68,8 +68,7 @@ class WAParser(base.parser):
 
               # close socket
               h.close()
-              
+
               # return response packet
               self.resp["status"] = base.STATUS_OK
               return self.resp
-

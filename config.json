@@ -1,6 +1,6 @@
 {
   "port": 8000, 
-  "color": true, 
-  "log-file": "log-latest.log", 
+  "color": true,
+  "log-file": "log-latest.log",
   "secret": "abc"
 }

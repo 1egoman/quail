@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import sys, os, time, atexit, shutil
-from signal import SIGTERM 
+from signal import SIGTERM
 
 # test for location (only on unix)
 if "usr/bin" in os.path.abspath( os.path.dirname(__file__) ):
@@ -20,37 +20,37 @@ class QuailDaemon:
     self.stdout = stdout
     self.stderr = stderr
     self.pidfile = pidfile
-  
+
   def daemonize(self):
     """
-    do the UNIX double-fork magic, see Stevens' "Advanced 
+    do the UNIX double-fork magic, see Stevens' "Advanced
     Programming in the UNIX Environment" for details (ISBN 0201563177)
     http://www.erlenstar.demon.co.uk/unix/faq_2.html#SEC16
     """
-    try: 
-      pid = os.fork() 
+    try:
+      pid = os.fork()
       if pid > 0:
         # exit first parent
-        sys.exit(0) 
-    except OSError, e: 
+        sys.exit(0)
+    except OSError, e:
       sys.stderr.write("fork #1 failed: %d (%s)\n" % (e.errno, e.strerror))
       sys.exit(1)
-  
+
     # decouple from parent environment
-    os.chdir("/") 
-    os.setsid() 
-    os.umask(0) 
-  
+    os.chdir("/")
+    os.setsid()
+    os.umask(0)
+
     # do second fork
-    try: 
-      pid = os.fork() 
+    try:
+      pid = os.fork()
       if pid > 0:
         # exit from second parent
-        sys.exit(0) 
-    except OSError, e: 
+        sys.exit(0)
+    except OSError, e:
       sys.stderr.write("fork #2 failed: %d (%s)\n" % (e.errno, e.strerror))
-      sys.exit(1) 
-  
+      sys.exit(1)
+
     # redirect standard file descriptors
     sys.stdout.flush()
     sys.stderr.flush()
@@ -60,12 +60,12 @@ class QuailDaemon:
     os.dup2(si.fileno(), sys.stdin.fileno())
     os.dup2(so.fileno(), sys.stdout.fileno())
     os.dup2(se.fileno(), sys.stderr.fileno())
-  
+
     # write pidfile
     atexit.register(self.delpid)
     pid = str(os.getpid())
     file(self.pidfile,'w+').write("%s\n" % pid)
-  
+
   def delpid(self):
     os.remove(self.pidfile)
 
@@ -80,12 +80,12 @@ class QuailDaemon:
       pf.close()
     except IOError:
       pid = None
-  
+
     if pid:
       message = "pidfile %s already exist. Daemon already running?\n"
       sys.stderr.write(message % self.pidfile)
       sys.exit(1)
-    
+
     # Start the daemon
     sys.stdout.write("started!\n")
     self.daemonize()
@@ -102,13 +102,13 @@ class QuailDaemon:
       pf.close()
     except IOError:
       pid = None
-  
+
     if not pid:
       message = "pidfile %s does not exist. Daemon not running?\n"
       sys.stderr.write(message % self.pidfile)
       return # not an error in a restart
 
-    # Try killing the daemon process  
+    # Try killing the daemon process
     try:
       while 1:
         os.kill(pid, SIGTERM)
@@ -133,11 +133,8 @@ class QuailDaemon:
 
   def run(self):
     # load src/main.py
-    while 1: 
-      os.chdir( PATH )
-      sys.path.append(PATH)
+    while 1:
       import main
-      # main = imp.load_source("main", "main.py")
       main.App()
 
 
@@ -163,8 +160,6 @@ if __name__ == "__main__":
     # start for debugging, with full stdin / stdout / stderr
     elif 'go' == sys.argv[1]:
       # start quail manually
-      os.chdir( PATH )
-      sys.path.append(PATH)
       import main
       main.App()
 
@@ -174,7 +169,7 @@ if __name__ == "__main__":
       os.chdir("plugins")
       if sys.argv[2] == "template":
         name = raw_input("Name of template plugin: ")
-        
+
         if os.system("git clone http://github.com/1egoman/qplugin %s" % name) == 0:
           print "Created template called '%s'." % name
           origin = raw_input("Github plugin origin (blank for none) : ")
