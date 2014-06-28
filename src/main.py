@@ -130,5 +130,14 @@ class App(object):
       self.log_file.write(content)
       self.log_file.write('\n')
 
+  # reload server
+  def reload(self):
+    self.plugins = load_all_plugins(self)
+    self.log("plugin reload complete.. done")
+
+    # reload config
+    self.config = configParser()
+    self.log("config reload complete..done")
+
 if __name__ == '__main__':
   App()
