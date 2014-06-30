@@ -48,7 +48,7 @@ TYPES = [
 ]
 
 # main class
-class pigeonParser(parser):
+class pigeonParser(Parser):
 
   def __init__(self, *args, **kwargs):
     super(pigeonParser, self).__init__(*args, **kwargs)

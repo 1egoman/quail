@@ -3,7 +3,7 @@ import os
 import json
 
 
-class staticParser(parser):
+class staticParser(Parser):
   """ Static Plugin Parser """
 
   def validate(self):

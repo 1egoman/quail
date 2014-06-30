@@ -43,7 +43,7 @@ def weather_listener(parent):
   pass
 
 
-class main_parser(parser):
+class main_parser(Parser):
   """ weather parser class """
 
   def validate(self):
