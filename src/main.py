@@ -138,7 +138,7 @@ class App(object):
 
     # reload config
     self.config = configParser()
-    self.log("config reload complete..done")
+    self.log("config reload complete.. done")
 
 if __name__ == '__main__':
   App()
