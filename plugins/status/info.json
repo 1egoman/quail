@@ -1,0 +1,6 @@
+{
+  "name": "Quail Status",
+  "desc": "Responds to status queries",
+  "author": "Ryan Gaus",
+  "main": "status.py:statusParser"
+}

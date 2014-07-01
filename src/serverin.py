@@ -50,8 +50,7 @@ class terminalFetcher(Thread):
         self.parent.log( "Connections: %s" % [t.addr for t in self.parent.threads] )
 
       elif r == "reload":
-        self.parent.plugins = query.load_all_plugins(self.parent)
-        self.parent.log("reload complete.")
+        self.parent.reload()
 
       elif r == "secret":
         if self.parent.config.has_key("secret"):

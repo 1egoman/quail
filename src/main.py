@@ -42,7 +42,7 @@ class App(object):
   # quail version
   VERSION_MAJOR = 0
   VERSION_MINOR = 3
-  VERSION_PATCH = 'C'
+  VERSION_PATCH = 'E'
 
   def __init__(self):
 
@@ -65,6 +65,7 @@ class App(object):
       self.log_file = open( os.path.join("..", self.config.server["log-file"]), 'a')
     else:
       self.log_file = None
+
 
     self.log( "version %s.%s%s by Ryan Gaus! https://github.com/1egoman/quail" % (self.VERSION_MAJOR, self.VERSION_MINOR, self.VERSION_PATCH) )
     self.running = 1
@@ -129,6 +130,15 @@ class App(object):
       self.log_file.write(colorless_header)
       self.log_file.write(content)
       self.log_file.write('\n')
+
+  # reload server
+  def reload(self):
+    self.plugins = load_all_plugins(self)
+    self.log("plugin reload complete.. done")
+
+    # reload config
+    self.config = configParser()
+    self.log("config reload complete.. done")
 
 if __name__ == '__main__':
   App()

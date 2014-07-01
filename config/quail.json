@@ -1,4 +1,5 @@
 {
   "name": "quail", 
-  "gender": "male"
+  "gender": "male",
+  "language": "en/us"
 }

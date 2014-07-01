@@ -53,7 +53,7 @@ class InvalidKeyException(Exception):
   pass
 
 
-class parser(object):
+class Parser(object):
   """ Base class for each plugin's parser """
 
   # initialization
@@ -86,13 +86,10 @@ class parser(object):
 class packet(dict): 
   """ a packet (sent from a plugin) """
 
-
-
   def __init__(self, *args, **kwargs):
     super(packet, self).__init__(self, *args, **kwargs)
     self["type"] = None
     self["files"] = []
-
 
 
   def add_file(self, name):

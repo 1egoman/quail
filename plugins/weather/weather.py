@@ -44,6 +44,7 @@ def parse_weather(self, when, where, API_KEY):
     if "rain" in self.query:
       if "rain" in conditions or "storm" in conditions or "snow" in conditions:
         self.resp["return"] = "raining"
+        self.resp["color"] = "blue"
       else:
         self.resp["return"] = "not raining"
       self.resp["text"] = "it is %s" % self.resp["return"]
@@ -52,6 +53,7 @@ def parse_weather(self, when, where, API_KEY):
     elif "sun" in self.query:
       if "sun" in conditions:
         self.resp["return"] = "sunny"
+        self.resp["color"] = "yellow"
       else:
         self.resp["return"] = "not sunny"
       self.resp["text"] = "it is %s" % self.resp["return"]
@@ -60,6 +62,7 @@ def parse_weather(self, when, where, API_KEY):
     elif "cloud" in self.query:
       if "cloud" in conditions:
         self.resp["return"] = "cloudy"
+        self.resp["color"] = "white"
       else:
         self.resp["return"] = "not cloudy"
       self.resp["text"] = "it is %s" % self.resp["return"]

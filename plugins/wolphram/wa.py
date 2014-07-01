@@ -5,7 +5,7 @@ import urllib2
 
 
 # main class
-class WAParser(base.parser):
+class WAParser(base.Parser):
 
   def __init__(self, *args, **kwargs):
     super(WAParser, self).__init__(*args, **kwargs)
