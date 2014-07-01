@@ -60,7 +60,7 @@ class Parser(object):
   def __init__(self, s, info=None):
     self.query = s
     self.info = info
-    self.resp = packet(
+    self.resp = Packet(
       status="BAD",
       packet="response",
       type=None,
@@ -83,11 +83,11 @@ class Parser(object):
 
 
 
-class packet(dict): 
+class Packet(dict): 
   """ a packet (sent from a plugin) """
 
   def __init__(self, *args, **kwargs):
-    super(packet, self).__init__(self, *args, **kwargs)
+    super(Packet, self).__init__(self, *args, **kwargs)
     self["type"] = None
     self["files"] = []
 

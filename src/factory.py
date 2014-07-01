@@ -54,82 +54,79 @@ class http_rest(BaseHTTPRequestHandler):
       # get rid of password in data string
       data = data[1:]
 
-      # make sure some data is there
-      if not len(data):
-        self.send_error(404, "no query provided")
-        return
-
-      # get variables from url
+      # get any variables from url
       lastquestion = self.path.rfind('?')
       if lastquestion != -1:
         get_args = urlparse.parse_qs(self.path[lastquestion+1:])
       else:
         get_args = {}
 
+      # if there is data
+      if len(data):
 
-      # the header
-      self.send_response(200)
-      self.send_header('Content-type', 'application/json')
-      self.end_headers()
-
-
-      # start building json string
-      response = {}
-
-      # parse text for plugin
-      query = create_query_object( data[0] )
+        # the header
+        self.send_response(200)
+        self.send_header('Content-type', 'application/json')
+        self.end_headers()
 
 
-      # what kind of request?
-      if len(data) > 1:
-        # a plugin was specified in the url
+        # start building json response
+        response = {}
 
-        # find the correct plugin
-        plugin = [  p for p in self.server.parent.plugins if p["name"] == data[0] or (p.has_key("shortname") and p["shortname"] == data[0])  ]
-        if len(plugin):
-          query = create_query_object( data[1] )
-          d, plugin_name = plugin[0], plugin[0]["name"]
-          plugin_call = d["call"](query, d)
+        # parse text for plugin
+        query = create_query_object( data[0] )
+
+
+        # what kind of request?
+        if len(data) > 1:
+          # a plugin was specified in the url
+
+          # find the correct plugin
+          plugin = [  p for p in self.server.parent.plugins if p["name"] == data[0] or (p.has_key("shortname") and p["shortname"] == data[0])  ]
+          if len(plugin):
+            query = create_query_object( data[1] )
+            d, plugin_name = plugin[0], plugin[0]["name"]
+            plugin_call = d["call"](query, d)
+          else:
+            self.send_error(404, "no such plugin can be found")
+            return
+
+
+
+
         else:
-          self.send_error(404, "no such plugin can be found")
-          return
+          # a plugin wasn't specified in the url
 
+          # find correct plugin
+          plugin = find_correct_plugin( query, self.server.parent.plugins, lastplugin=lastplugin)
+          if plugin:
+            plugin_call, plugin_name = plugin[0], plugin[1]["name"]
+          else:
+            self.send_error(404, "no such plugin can be found")
+            return
 
-
-
-      else:
-        # a plugin wasn't specified in the url
-
-        # find correct plugin
-        plugin = find_correct_plugin( query, self.server.parent.plugins, lastplugin=lastplugin)
-        if plugin:
-          plugin_call, plugin_name = plugin[0], plugin[1]["name"]
+        # set this plugin to be last plugin, for checking it first later on
+        if lastplugin == plugin_name:
+          iteration += 1
         else:
-          self.send_error(404, "no such plugin can be found")
-          return
-
-      # set this plugin to be last plugin, for checking it first later on
-      if lastplugin == plugin_name:
-        iteration += 1
-      else:
-        iteration = 0
-      lastplugin = plugin_name
-      plugin_call.iteration = iteration
+          iteration = 0
+        lastplugin = plugin_name
+        plugin_call.iteration = iteration
 
 
 
 
-      # log what we are doing
-      self.server.parent.log( "plugin: %s -> %s" % (plugin_name, query) )
+        # log what we are doing
+        self.server.parent.log( "plugin: %s -> %s" % (plugin_name, query) )
 
-      # parse it, and add to stack
-      out = plugin_call.parse(parent=self.server.parent)
+        # parse it, and add to stack
+        out = plugin_call.parse(parent=self.server.parent)
 
-      # write out the stack
-      if out:
-        self.server.parent.stack.append(out)
-      else:
-        self.server.parent.stack.append("{\n  \"status\": \"NO_HIT\", \n  \"type\": \"no_hit\" \n}")
+        # write out the stack
+        if out:
+          self.server.parent.stack.append(out)
+        else:
+          self.server.parent.stack.append("{\n  \"status\": \"NO_HIT\", \n  \"type\": \"no_hit\" \n}")
 
 
 
