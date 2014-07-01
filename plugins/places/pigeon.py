@@ -54,7 +54,7 @@ class pigeonParser(Parser):
     super(pigeonParser, self).__init__(*args, **kwargs)
 
   def validate(self): 
-    querystr = ' '.join(self.query)
+    querystr = ' '.join([str(a) for a in self.query])
     for cat in TYPES:
       for item in cat:
         if item.replace('_', ' ') in querystr:

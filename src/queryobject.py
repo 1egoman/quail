@@ -129,6 +129,13 @@ def create_query_object(query):
         delta += dt.timedelta(days=days_delta)
         response = replace_inside_string(query, response, d, {"type": "time", "when": format_time(now + delta)})
 
+      elif "tommorow" in query:
+        delta += dt.timedelta(days=1)
+        response = replace_inside_string(query, response, "tommorow", {"type": "time", "when": format_time(now + delta)})
+
+      elif "yesterday" in query:
+        delta += dt.timedelta(days=-1)
+        response = replace_inside_string(query, response, "yesterday", {"type": "time", "when": format_time(now + delta)})
 
 
 
@@ -149,7 +156,6 @@ def create_query_object(query):
       # set it
       now = dt.datetime(day=days_delta, month=now.month, year=now.year)
       response = replace_inside_string(query, response, "%s%s" % (specific_day.group(1), specific_day.group(2)), {"type": "time", "when": format_time(now + delta)})       
-
 
   return response
 
@@ -173,13 +179,14 @@ def format_time(t):
 
 # replace the specified word(s) with an object
 def replace_inside_string(query, resp, word, what=None):
-  if what:
+  if what and word in resp:
     inx = resp.index(word)
     resp[ inx ] = what
     if type(what) == dict:
       resp[ inx ]["text"] = word
-  else:
+  elif word in resp:
     resp.remove(word)
+
 
   # return
   return resp

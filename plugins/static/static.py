@@ -13,7 +13,7 @@ class staticParser(Parser):
       self.phrases = json.loads( f.read() )
 
     # validate
-    querystr = ' '.join(self.query)
+    querystr = ' '.join([str(a) for a in self.query])
     return len([1 for i in self.phrases if i in querystr])
 
   def parse(self, parent):
