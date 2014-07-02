@@ -9,8 +9,6 @@ import time
 import json
 import os
 
-from BaseHTTPServer import HTTPServer
-
 
 """
 List of ansi escape codes for color

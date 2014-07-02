@@ -35,10 +35,10 @@ lastplugin = None
 iteration = 0
 
 
-"""
-this class deals with incoming http requests
-"""
+
+
 class http_rest(BaseHTTPRequestHandler):
+  """ this class deals with incoming http requests """
   
 
   def do_GET(self):
@@ -120,7 +120,8 @@ class http_rest(BaseHTTPRequestHandler):
         self.server.parent.log( "plugin: %s -> %s" % (plugin_name, query) )
 
         # parse it, and add to stack
-        out = plugin_call.parse(parent=self.server.parent)
+        plugin_call.parse(parent=self.server.parent)
+        out = plugin_call.resp
 
         # write out the stack
         if out:
