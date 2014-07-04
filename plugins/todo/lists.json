@@ -1,0 +1,24 @@
+[
+  {
+    "name": "grocery", 
+    "contents": [
+      {
+        "name": "milk", 
+        "tags": [
+          "dairy"
+        ]
+      }, 
+      {
+        "name": "eggs", 
+        "tags": [
+          "dairy"
+        ]
+      }, 
+      {
+        "when": "", 
+        "name": "peaches", 
+        "tags": []
+      }
+    ]
+  }
+]

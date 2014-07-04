@@ -1,0 +1,6 @@
+{
+  "name": "ToDo",
+  "desc": "List manager",
+  "author": "Ryan Gaus",
+  "main": "todo.py:TodoParser"
+}
