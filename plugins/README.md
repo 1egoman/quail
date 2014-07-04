@@ -95,6 +95,7 @@ Class Definitions
   - `query`: This list contains the query that the plugin should parse. This value is often just a list of the plugin's words, but can also contain other metadata, such as dates or times. Example: `["will", "it", "rain", {"when": [2014, 1, 1, 0, 0, 0], "text": "tommorow"}]`
   - `resp`: This `base.Packet` object is the final result send to the user. 
   - `info`: The json-parsed contents of your info.json.
+  - `addr`: Tuple containing ip and port of client.
   - `validate()`: This function should return a true value if the plugin is equipped to handle the query. If the plugin cannot handle the query, return a false value.
   - `parse()`: Parse the query and compute a response. The response and all its relevent information should be put into `resp`.
 

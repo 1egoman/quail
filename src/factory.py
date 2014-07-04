@@ -98,7 +98,7 @@ class http_rest(BaseHTTPRequestHandler):
           # a plugin wasn't specified in the url
 
           # find correct plugin
-          plugin = find_correct_plugin( query, self.server.parent.plugins, lastplugin=lastplugin)
+          plugin = find_correct_plugin( query, self.server.parent.plugins, lastplugin=lastplugin, addr=self.client_address)
           if plugin:
             plugin_call, plugin_name = plugin[0], plugin[1]["name"]
           else:

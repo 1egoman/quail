@@ -57,9 +57,10 @@ class Parser(object):
   """ Base class for each plugin's parser """
 
   # initialization
-  def __init__(self, s, info=None):
+  def __init__(self, s, info=None, addr=None):
     self.query = s
     self.info = info
+    self.addr = addr
     self.resp = Packet(
       status="BAD",
       packet="response",

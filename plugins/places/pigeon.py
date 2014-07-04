@@ -72,7 +72,10 @@ class pigeonParser(Parser):
       raise InvalidKeyException, "Please enter a valid Google Places API key in Pigeon's info.json"
 
     # get our location
-    qry = urllib2.urlopen("http://freegeoip.net/json")
+    if type(self.addr) == tuple:
+      qry = urllib2.urlopen("http://freegeoip.net/json/%s" % self.addr[0] )
+    else:
+      qry = urllib2.urlopen("http://freegeoip.net/json")
     l = json.loads( qry.read() )
     pos_lat, pos_long = l["latitude"], l["longitude"]
 

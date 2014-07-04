@@ -57,13 +57,13 @@ def load_all_plugins(q=None):
 
 
 # find the plugin that works
-def find_correct_plugin(e, p, lastplugin=None):
+def find_correct_plugin(e, p, lastplugin=None, addr=None):
 
   # check last plugin
   if lastplugin:
     plgn = [  pl for pl in p if pl["name"] == lastplugin and "Wolfram Alpha" not in pl["name"]  ]
     if len(plgn):
-      l = plgn[0]["call"](e, plgn[0])
+      l = plgn[0]["call"](e, plgn[0], addr)
       if l.validate():
         return l, plgn[0]
 
