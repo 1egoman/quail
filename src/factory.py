@@ -140,7 +140,7 @@ class http_rest(BaseHTTPRequestHandler):
             y.append( self.server.parent.stack.pop() )
         except IndexError: pass
 
-        self.wfile.write( y )
+        self.wfile.write( dumps(y) )
       else:
         # write out whole stack
         self.wfile.write( "%s" % dumps(self.server.parent.stack) )
