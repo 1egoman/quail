@@ -1,4 +1,6 @@
-from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
+# from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
+from BaseHTTPServer import HTTPServer
+from SimpleHTTPServer import SimpleHTTPRequestHandler
 
 import inspect
 import urllib2
@@ -37,7 +39,7 @@ iteration = 0
 
 
 
-class http_rest(BaseHTTPRequestHandler):
+class http_rest(SimpleHTTPRequestHandler):
   """ this class deals with incoming http requests """
   
 
@@ -62,7 +64,8 @@ class http_rest(BaseHTTPRequestHandler):
         get_args = {}
 
       # if there is data
-      if len(data):
+      print data
+      if len(data) and len(data[0]):
 
         # the header
         self.send_response(200)
@@ -147,13 +150,7 @@ class http_rest(BaseHTTPRequestHandler):
         self.server.parent.stack = []
 
 
-      
-
-
-
-
-
-    elif "favicon" not in self.path: # stupid modern browsers
+    else:
       # bad secret (403 forbidden)
       self.send_error(403, "no secret provided or secret was bad")
 
